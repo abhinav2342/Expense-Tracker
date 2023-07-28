@@ -1,0 +1,45 @@
+﻿@model Expense_tracker.Models.EntityModels.Transaction
+
+@{
+    ViewData["PageTitle"] = Model.TransactionId == 0 ? "Create a new transaction": "Edit transaction";
+    ViewData["PageActionText"] = "View Transactions";
+    ViewData["PageActionUrl"] = "/Transactions";
+}
+<div class="row">
+    <div class="col-md-7">
+        <div class="widget p-5">
+            <form asp-action="AddOrEdit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="TransactionId" value="@Model.TransactionId" />
+                <div class="mb-3">
+                    <ejs-dropdownlist id="categoryList" placeholder="Category" ejs-for="CategoryId" dataSource="@ViewBag.Categories" floatLabelType="Always"
+                                      allowFiltering="true" ignoreAccent="true" filterType="Contains" popupHeight="220px">
+                        <e-dropdownlist-fields value="CategoryId" text="TitleWithIcon"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <ejs-numerictextbox id="amount" placeholder="Amount" ejs-for="Amount" 
+                    floatLabelType="Always" min="0" format="0c"></ejs-numerictextbox>
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <ejs-textbox id="note" placeholder="Note" ejs-for="Note" floatLabelType="Always"></ejs-textbox>
+                    <span asp-validation-for="Note" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <ejs-datepicker id="date" placeholder="Date" ejs-for="Date" floatLabelType="Always" format="dd-MM-yyyy"></ejs-datepicker>
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+
+                <ejs-button id="Submit" type="submit" content="Submit" cssClass="e-success"></ejs-button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
